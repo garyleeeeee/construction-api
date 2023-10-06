@@ -14,7 +14,10 @@ function registerMiddleware(app) {
     app.use(express.json());
     app.use(express.static(path.join(__dirname, '..', 'public')));
     app.use(cors({
-        origin: 'http://localhost:3000'
+        origin: [
+            'http://localhost:3000',
+            'https://construction-frontend.onrender.com'
+    ]
     }));
     app.use(morgan('combined'));
     app.use('/v1', api);
