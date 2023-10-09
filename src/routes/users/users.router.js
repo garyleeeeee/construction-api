@@ -5,13 +5,19 @@ const {
     httpAddPendingUser, 
     httpSignInUser,
     httpInitialisePassword,
-    verifyToken
+    verifyToken,
+    httpFindUserById
 } = require('./users.controller');
 
 // Get all users 
 router.get('/', verifyToken, async (req, res) => {
     return httpGetAllUsers(req, res);
 });
+
+// Get User by ID
+router.post('/findbyid', async (req, res) => {
+    return httpFindUserById(req, res);
+})
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -21,7 +27,7 @@ router.post('/register', async (req, res) => {
 // Sign In a user
 router.post('/login', async (req, res) => {
     return httpSignInUser(req, res);
-})
+});
 
 // Initiate new user password
 router.post('/password', async (req, res) => {

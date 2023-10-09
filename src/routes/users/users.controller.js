@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { 
     getAllUsers,
+    findUserById,
     addPendingUser,
     signInUser,
     initialisePassword
@@ -17,6 +18,17 @@ async function httpGetAllUsers (req, res) {
         res.status(500).json({ success: false, message: error.message });
     };
 };
+
+async function httpFindUserById (req, res) {
+    try {
+        const userData  = req.body;
+        const user = await findUserById(userData.id);
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false, message: error.message });
+    };
+}
 
 async function httpAddPendingUser (req, res) {
     try {
@@ -72,9 +84,10 @@ function verifyToken(req, res, next) {
 
 module.exports = {
     httpGetAllUsers,
+    httpFindUserById,
     httpAddPendingUser,
     httpSignInUser,
     httpInitialisePassword,
-    verifyToken
+    verifyToken,
 }
 

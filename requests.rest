@@ -13,3 +13,14 @@ Content-Type: application/json
     "role": "",
     "phoneNumber": ""
 }
+
+###
+
+POST http://localhost:8000/v1/users/password
+Content-Type: application/json
+
+{
+    "id": "6519407fb9a891fce6e8e7d0",
+    "password": "38108828",
+    "rePassword": "38108828"
+}
