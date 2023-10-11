@@ -54,6 +54,20 @@ async function addPendingUser (userData) {
     return savedUser;
 };
 
+async function updateUser (userData) {
+    const { _id, name, accessLevel, role, phoneNumber, salary, status } = userData;
+
+    const updatedUser = await User.findByIdAndUpdate(_id, {
+        name, accessLevel, role, phoneNumber, salary, status
+    }, { new: true });
+
+    if (!updatedUser) {
+        throw new Error('用户信息更新失败!');
+    };
+    updatedUser.password = undefined;
+    return updatedUser;
+};
+
 async function signInUser (userData) {
     const { name, password } = userData;
     const user = await User.findOne({name});
@@ -107,6 +121,7 @@ module.exports = {
     getAllUsers,
     findUserById,
     addPendingUser,
+    updateUser,
     signInUser,
     initialisePassword
 }

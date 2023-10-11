@@ -5,8 +5,9 @@ const {
     httpAddPendingUser, 
     httpSignInUser,
     httpInitialisePassword,
+    httpUpdateUser,
+    httpFindUserById,
     verifyToken,
-    httpFindUserById
 } = require('./users.controller');
 
 // Get all users 
@@ -22,6 +23,11 @@ router.post('/findbyid', async (req, res) => {
 // Register a new user
 router.post('/register', async (req, res) => {
     return httpAddPendingUser(req, res);
+});
+
+// Update a user
+router.put('/update', async (req, res) => {
+    return httpUpdateUser(req, res);
 });
 
 // Sign In a user
