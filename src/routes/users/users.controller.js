@@ -3,6 +3,7 @@ const {
     getAllUsers,
     findUserById,
     updateUser,
+    deleteUser,
     addPendingUser,
     signInUser,
     initialisePassword
@@ -35,6 +36,17 @@ async function httpUpdateUser (req, res) {
     try {
         const userData = req.body;
         const user = await updateUser(userData);
+        res.status(201).json({ success: true, data: user });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false, message: error.message });
+    };
+};
+
+async function httpDeleteUser (req, res) {
+    try {
+        const userData = req.body;
+        const user = await deleteUser(userData);
         res.status(201).json({ success: true, data: user });
     } catch (error) {
         console.log(error);
@@ -98,6 +110,7 @@ module.exports = {
     httpGetAllUsers,
     httpFindUserById,
     httpUpdateUser,
+    httpDeleteUser,
     httpAddPendingUser,
     httpSignInUser,
     httpInitialisePassword,

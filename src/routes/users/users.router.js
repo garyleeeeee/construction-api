@@ -6,6 +6,7 @@ const {
     httpSignInUser,
     httpInitialisePassword,
     httpUpdateUser,
+    httpDeleteUser,
     httpFindUserById,
     verifyToken,
 } = require('./users.controller');
@@ -28,6 +29,11 @@ router.post('/register', async (req, res) => {
 // Update a user
 router.put('/update', async (req, res) => {
     return httpUpdateUser(req, res);
+});
+
+// Delete a user
+router.delete('/delete', async (req, res) => {
+    return httpDeleteUser(req, res);
 });
 
 // Sign In a user

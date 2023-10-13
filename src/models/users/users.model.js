@@ -68,6 +68,17 @@ async function updateUser (userData) {
     return updatedUser;
 };
 
+async function deleteUser (userData) {
+    const { _id } = userData;
+
+    const deletedUser = await User.findByIdAndRemove(_id);
+    if (!deletedUser) {
+        throw new Error('ID有误，用户删除失败!');
+    };
+    deletedUser.password = undefined;
+    return deletedUser;
+};
+
 async function signInUser (userData) {
     const { name, password } = userData;
     const user = await User.findOne({name});
@@ -122,6 +133,7 @@ module.exports = {
     findUserById,
     addPendingUser,
     updateUser,
+    deleteUser,
     signInUser,
     initialisePassword
 }
