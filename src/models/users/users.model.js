@@ -54,6 +54,7 @@ async function addPendingUser (userData) {
     return savedUser;
 };
 
+
 async function updateUser (userData) {
     const { _id, name, accessLevel, role, phoneNumber, salary, status } = userData;
 
@@ -68,6 +69,7 @@ async function updateUser (userData) {
     return updatedUser;
 };
 
+// Delete User with _id
 async function deleteUser (userData) {
     const { _id } = userData;
 
@@ -79,6 +81,7 @@ async function deleteUser (userData) {
     return deletedUser;
 };
 
+// Sign In User with NAME
 async function signInUser (userData) {
     const { name, password } = userData;
     const user = await User.findOne({name});
@@ -99,12 +102,34 @@ async function signInUser (userData) {
     return user;
 };
 
+// Update User Password with ID
+async function updatePassword (userData) {
+    const { id, password, rePassword } = userData;
+
+    if (password !== rePassword) {
+        throw new Error('两次输入密码不一致!');
+    };
+
+    const user = await User.findById(id);
+    if (!user) {
+        throw new Error('用户ID不存在，请联系管理员!');
+    };
+
+    const hash = await genHash(password);
+    user.password = hash;
+    const savedUser = await user.save()
+
+    savedUser.password = undefined;
+    return savedUser;
+}
+
+// Initialise User Password with ID
 async function initialisePassword (userData) {
     const { id, password, rePassword } = userData;
 
     // console.log(userData);
     if (password !== rePassword) {
-        throw new Error('New passwords do not match!');
+        throw new Error('两次输入密码不一致!');
     };
 
     const user = await User.findById(id);
@@ -133,6 +158,7 @@ module.exports = {
     findUserById,
     addPendingUser,
     updateUser,
+    updatePassword,
     deleteUser,
     signInUser,
     initialisePassword

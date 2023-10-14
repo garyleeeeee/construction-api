@@ -6,6 +6,7 @@ const {
     httpSignInUser,
     httpInitialisePassword,
     httpUpdateUser,
+    httpUpdatePassword,
     httpDeleteUser,
     httpFindUserById,
     verifyToken,
@@ -44,7 +45,12 @@ router.post('/login', async (req, res) => {
 // Initiate new user password
 router.post('/password', async (req, res) => {
     return httpInitialisePassword(req, res);
-})
+});
+
+// Update user password
+router.post('/update-password', async (req, res) => {
+    return httpUpdatePassword(req, res);
+});
 
 
 module.exports = router;

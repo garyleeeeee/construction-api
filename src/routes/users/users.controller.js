@@ -4,6 +4,7 @@ const {
     findUserById,
     updateUser,
     deleteUser,
+    updatePassword,
     addPendingUser,
     signInUser,
     initialisePassword
@@ -89,6 +90,18 @@ async function httpInitialisePassword (req, res) {
     }
 };
 
+
+async function httpUpdatePassword (req, res) {
+    try {
+        const userData = req.body;
+        const user = await initialisePassword(userData);
+        res.status(201).json({ success: true, data: user });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false, message: error.message });
+    }
+}
+
 function verifyToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -113,6 +126,7 @@ module.exports = {
     httpDeleteUser,
     httpAddPendingUser,
     httpSignInUser,
+    httpUpdatePassword,
     httpInitialisePassword,
     verifyToken,
 }
