@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment-timezone');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -36,8 +37,24 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'pending',
         enum: ['pending', 'active', 'inactive']
+    },
+    createdAt: {
+        type: Date,
+        default: () => moment.tz("Asia/Shanghai").toDate(),
+    },
+    updatedAt: {
+        type: Date,
+        default: () => moment.tz("Asia/Shanghai").toDate(),
     }
-},{timestamps: true});
+});
+
+// Middleware to update the 'updatedAt' field on document updates
+UserSchema.pre('save', function(next) {
+    if (this.isModified()) {
+        this.updatedAt = moment.tz("Asia/Shanghai").toDate();
+    }
+    next();
+});
 
 const User = mongoose.model('User', UserSchema);
 

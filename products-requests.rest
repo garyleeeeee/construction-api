@@ -1,0 +1,21 @@
+POST http://localhost:8000/v1/products/new
+Content-Type: application/json
+
+{
+    "name": "签字笔",
+    "brand": "晨光",
+    "description": "",
+    "price": 2,
+    "specification": "黑色",
+    "isFixedAsset": false,
+    "imageUrl": ""
+}        
+
+
+###
+GET http://localhost:8000/v1/products
+Content-Type: application/json
+
+
+
+###
