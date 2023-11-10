@@ -70,8 +70,7 @@ async function httpSignInUser (req, res) {
     try {
         const userData = req.body;
         const user = await signInUser(userData);
-        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2d' })
-
+        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2d' });
         res.status(201).json({ success: true, data: user, accessToken});
     } catch (error) {
         console.log(error);

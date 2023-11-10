@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+
 const {
     httpGetAllProducts,
     httpAddNewProduct,
     httpUpdateProduct,
-    httpDeleteProduct
+    httpDeleteProduct,
+    verifyToken
 } = require('./products.controllers');
 
-router.get('/', (req, res) => {
+router.get('/', verifyToken, (req, res) => {
     return httpGetAllProducts(req, res);
 });
 

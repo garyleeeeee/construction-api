@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const {
     getAllProducts,
     addNewProduct,
@@ -48,10 +50,23 @@ async function httpUpdateProduct (req, res) {
     };
 };
 
+function verifyToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Access Denied' });
+    try {
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        next();
+    } catch (err) {
+        res.status(400).json({ message: 'Invalid Token' });
+    };
+};
+
 
 module.exports = {
     httpGetAllProducts,
     httpAddNewProduct,
     httpDeleteProduct,
-    httpUpdateProduct
+    httpUpdateProduct,
+    verifyToken
 }
