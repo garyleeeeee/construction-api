@@ -19,7 +19,17 @@ async function httpGetAllProducts (req, res) {
 
 async function httpAddNewProduct (req, res) {
     try {
-        const productData= req.body;
+        const { name, brand, description, price, specification, isFixedAsset } = req.body;
+        const imageUrl = req.file ? req.file.path : '';
+        const productData = {
+            name,
+            brand,
+            description,
+            price: Number(price),
+            specification,
+            isFixedAsset: isFixedAsset === 'true',
+            imageUrl // Save the image URL here
+        };
         const savedProduct = await addNewProduct(productData); // A non-null result(even an empty Array) will be return, otherwise would be caught as an Error and thrown
         res.status(200).json({ success: true, data: savedProduct });
     } catch (error) {

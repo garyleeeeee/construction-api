@@ -1,3 +1,5 @@
+# uploaded files
+/uploads
 # Rest Requests
 .rest
 # Logs

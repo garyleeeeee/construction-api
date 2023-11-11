@@ -9,13 +9,16 @@ const ProductSchema = new mongoose.Schema({
     brand: {
         type: String,
         default: '',
+        required: true,
     },
     description: {
         type: String,
-        default: '',
+        default: '无',
     },
     price: {
         type: Number,
+        default: 0,
+        required: true,
     },
     specification: {
         type: String,
